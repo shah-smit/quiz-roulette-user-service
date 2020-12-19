@@ -1,9 +1,9 @@
-FROM golang:1.14-alpine AS build
+FROM golang:1.9.2
 
-WORKDIR /src/
-COPY user-service.go go.* /src/
-RUN CGO_ENABLED=0 go build -o /bin/demo
+WORKDIR /go/src/app
+COPY helloworld.go go.* /go/src/app
 
-FROM scratch
-COPY --from=build /bin/demo /bin/demo
-ENTRYPOINT ["/bin/demo"]
+RUN go get -d -v app
+RUN go install
+
+CMD ["/go/bin/app"]
