@@ -1,6 +1,7 @@
 package com.quizroulette.userservice;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,8 @@ public class UserController {
   @GetMapping("/{userId}")
   public UserEntity getUserBy(@PathVariable("userId") String userId) {
     log.info("Getting user for {}", userId);
-    return userRepository.findById(userId).get();
+    Optional<UserEntity> byId = userRepository.findById(userId);
+    return byId.orElse(null);
   }
 
   @PutMapping
